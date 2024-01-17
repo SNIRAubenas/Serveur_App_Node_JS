@@ -16,7 +16,7 @@ const TestApi = () => {
 
         fetchData();
     }, []); // Le tableau vide signifie que cet effet ne s'exécute qu'une fois après le montage initial du composant
-
+//Test
     return (
         <div>
             <p>Réponse de l'API : {apiResponse}</p>
