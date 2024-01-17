@@ -1,7 +1,8 @@
 import React from "react";
-import {Stack} from "@mui/material";
+import {Card, CardActionArea, CardContent, CardMedia, Stack} from "@mui/material";
+import Typography from "@mui/material/Typography";
 
-
+const card_img = require("../images/card_home_img.jpg")
 export const MuiLayout = () => {
 
 
@@ -9,10 +10,22 @@ export const MuiLayout = () => {
         <Stack padding={5} spacing={4} direction={'row'} useFlexGap flexWrap={'wrap'}
                justifyContent="space-evenly"
                alignItems="flex-start">
-            <p>
-                <h1>CONFIG INIT ETUDIANT OK</h1>
-                <h5>Si j'ai vous, je garderais une copie de ce projet de base pour le démarrage de vos futures applications en REACT TS avec MUI</h5>
-            </p>
+            <Card sx={{ maxWidth: 500 }}>
+                    <CardMedia
+                        component="img"
+                        height="240"
+                        image={card_img}
+                        alt="green iguana"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            Bienvenue sur le site de la table de tri
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Vous pourrez accéder à vos données ainsi que les données générales de la table.
+                        </Typography>
+                    </CardContent>
+            </Card>
         </Stack>
     )
 

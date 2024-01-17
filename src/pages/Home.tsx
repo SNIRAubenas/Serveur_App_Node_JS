@@ -3,7 +3,7 @@ import {MuiLayout} from "../components/MuiLayout";
 import React from "react";
 
 export const Home = () => {
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
     return(
         <>
             <MuiLayout/>
