@@ -1,12 +1,12 @@
 const config = {
     db: {
         /* don't expose password or any sensitive info, done only for demo */
-        host: "localhost",
+        host: "10.0.0.164",
         user: "root",
         password: "",
-        database: "test",
+        database: "table_de_tri",
         connectTimeout: 60000
     },
-    listPerPage: 10,
+
 };
 module.exports = config;
