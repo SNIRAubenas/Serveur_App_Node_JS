@@ -7,6 +7,6 @@ const config = {
         database: "table_de_tri",
         connectTimeout: 60000
     },
-
+    listPerPage: 10,
 };
 module.exports = config;
