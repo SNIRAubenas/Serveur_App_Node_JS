@@ -6,10 +6,10 @@ const  parser = require('body-parser');
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const auth = require("./authentification");
+const {request} = require("express");
 
 
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.send("connected");
   console.log(req.session);
@@ -33,14 +33,18 @@ router.post('/login', function(request, response, next){
     login: user_login,
     password:user_password
   }
- var reponse =auth.lireLesLogin(request, response, user);
-  if(response == true){
-    response.send("true")
-  }else{
-    response.send("false")
-  }
+
+  var reponse =auth.lireLesLogin(request, response, user);
+ //  if(response === true){
+ //    response.send("true")
+ //  }else{
+ //    response.send("false")
+ //
+ //  }
   //response.json(reponse);
 });
+
+
 
 
 

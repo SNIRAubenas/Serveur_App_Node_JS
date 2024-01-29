@@ -8,9 +8,9 @@ const connection = mysql.createConnection(config.db);
 
 async function  lireLesLogin(request, response, user){
     let login = await lelogin(user);
-    let message = '{"login":"' + login.login + '"}'
-    //console.log("message = " + message)
-    return message;
+    let bool = true
+    let message = '{"login":"' + login + '"}'
+    response.send(login)
 }
 
 function lelogin(user){
@@ -19,19 +19,22 @@ function lelogin(user){
     console.log("log ok")
     return new Promise(function (resolve, reject){
         // const connection =  mysql.createConnection(config.db);
-        const sql = "SELECT * FROM user where login ='" + user.login + "'";
+        const sql = 'SELECT * FROM user WHERE login = "'+user.login+'" AND PASSWORD = "'+user.password+'"';
+        console.log(user.password)
         console.log("sql = " + sql);
         connection.query(sql, function (err, result) {
             if (err) {
-                console.log("test query");
-                reject(err);
+                console.log("test query" + err);
+                reject(false);
             }
-            if (sql != true){
-                console.log("tu es naze");
+            if (result.length <= 0){
+                resolve(false)
+            }else{
+                console.log("test ok " + result[0]);
+                resolve(true);
 
             }
-            console.log("test ok " + result[0]);
-            resolve(result[0]);
+
 
         });
     });
