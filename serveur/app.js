@@ -7,8 +7,6 @@ require("dotenv").config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var  db_connex = require('./Bdd/db_connexion');
-
 const cors = require('cors')
 const bodyParser = require("body-parser");
 const session = require("express-session");
