@@ -1,21 +1,23 @@
 const mysql = require('mysql2/promise');
 const config = require('./config');
 
+
 async function query(sql, params) {
-    const connection = await mysql.createConnection(config.db);
-    console.log("connected")
-    await connection.query(sql, function (err, result) {
-        if (err) {
-            return err;
-        }
-        return result;
-    });
+    try {
+        const connection = await mysql.createConnection(config.db);
+        console.log("Connected");
 
-    console.log('executed');
-    console.log(results);
-    return results;
+        // Utiliser await directement pour la requête
+        const [results, fields] = await connection.query(sql, params);
+
+        console.log('Executed');
+        console.log(results);
+        return results;
+    } catch (err) {
+        console.error(err);
+        throw err; // Ne pas oublier de propager l'erreur
+    }
 }
-
 
 
 module.exports = {

@@ -1,14 +1,13 @@
-var express = require('express');
-var router = express.Router();
-const  parser = require('body-parser');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');  // Correctif : changer 'parser' en 'bodyParser'
 const db_requette = require('./db_requette');
-//const connection = require('../Bdd/db');
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const auth = require("./authentification");
-const {request} = require("express");
+const db = require("../Bdd/db");
 
-
+router.use(bodyParser.json());
 
 router.get('/', function(req, res, next) {
   res.send("connected");
@@ -16,9 +15,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/api', async function(req, res, next) {
-  console.log(db_requette.Emballage())
-  res.send(db_requette.Emballage())
+  try {
+    const sql = 'SELECT SUM(emballage) AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet';
+    const result = await db.query(sql);
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 });
+
 
 router.post('/login', function(request, response, next){
 

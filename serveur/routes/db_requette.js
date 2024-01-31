@@ -1,5 +1,4 @@
 const db = require('../Bdd/db');
-const helper = require('../Bdd/helper');
 const config = require('../Bdd/config');
 const {data} = require("express-session/session/cookie");
 const mysql = require("mysql2");
@@ -52,7 +51,7 @@ async function Emballage(){
 
         try {
             // Utilisation de queryAsync au lieu de db.query pour le mode promesse
-            const [rows] = await queryAsync('SELECT SUM(emballage) AS totalEmballage FROM dechet');
+            const [rows] = await queryAsync('SELECT SUM(emballage) FROM dechet');
 
             // Vérifiez si des données ont été récupérées
             if (rows.length > 0) {
