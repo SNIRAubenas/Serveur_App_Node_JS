@@ -1,16 +1,28 @@
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const {query} = require("express");
+const jwt = require("jsonwebtoken");
 
 
 const connection = mysql.createConnection(config.db);
 
+//methode pour gerer la connexion des utilisateur
+async function lireLesLogin(request, response, user) {
+    console.log("on est bon");
 
-async function  lireLesLogin(request, response, user){
-    let login = await lelogin(user);
-    let bool = true
-    let message = '{"login":"' + login + '"}'
-    response.send(login)
+    try {
+        const login = await lelogin(user);
+
+        if (login) {
+            const token = jwt.sign({ user }, 'votre_clé_secrète', { expiresIn: '1h' });
+            response.json({ success: true, message: 'Authentification réussie.', token });
+        } else {
+            response.json({ success: false, message: 'Authentification échouée.' });
+        }
+    } catch (err) {
+        console.error(err);
+        response.status(500).json({ success: false, message: 'Erreur serveur lors de l\'authentification.' });
+    }
 }
 
 function lelogin(user){

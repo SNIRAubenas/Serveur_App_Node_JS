@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const config = require('./config');
 
-
+// methode pour nous connecter a la base de données
 async function query(sql, params) {
     try {
         const connection = await mysql.createConnection(config.db);
