@@ -12,12 +12,13 @@ async function lireLesLogin(request, response, user) {
 
     try {
         const login = await lelogin(user);
-
+        var success = false;
         if (login) {
             const token = jwt.sign({ user }, 'votre_clé_secrète', { expiresIn: '1h' });
-            response.json({ success: true, message: 'Authentification réussie.', token });
+            success= true;
+            response.json({ success : success , message: 'Authentification réussie.', token });
         } else {
-            response.json({ success: false, message: 'Authentification échouée.' });
+            response.json({ success : false, message: 'Authentification échouée.' });
         }
     } catch (err) {
         console.error(err);
@@ -32,17 +33,15 @@ function lelogin(user){
     return new Promise(function (resolve, reject){
         // const connection =  mysql.createConnection(config.db);
         const sql = 'SELECT * FROM user WHERE login = "'+user.login+'" AND PASSWORD = "'+user.password+'"';
-        console.log(user.password)
         console.log("sql = " + sql);
         connection.query(sql, function (err, result) {
             if (err) {
-                console.log("test query" + err);
                 reject(false);
             }
             if (result.length <= 0){
                 resolve(false)
             }else{
-                console.log("test ok " + result[0]);
+
                 resolve(true);
 
             }
