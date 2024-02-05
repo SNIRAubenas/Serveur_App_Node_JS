@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 router.get('/api', async function(req, res, next) {
   try {
     const sql = 'SELECT SUM(emballage) AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet';
-    const sql2 = 'SELECT * FROM dechet WHERE WEEK(` horodatage`, 1) = 5;';
+    const sql2 = 'SELECT * FROM dechet WHERE WEEK(horodatage, 1) = 5;';
     const result = await db.query(sql);
     res.json(result);
   } catch (err) {
