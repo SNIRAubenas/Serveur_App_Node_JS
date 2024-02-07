@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 
 const connection = mysql.createConnection(config.db);
 
-//methode pour gerer la connexion des utilisateur
+//methode pour gerer la connexion des utilisateur utilisation de jwt
 async function lireLesLogin(request, response, user) {
     try {
         const login = await lelogin(user);

@@ -5,12 +5,9 @@ const config = require('./config');
 async function query(sql, params) {
     try {
         const connection = await mysql.createConnection(config.db);
-        console.log("Connected");
 
         // Utiliser await directement pour la requête
         const [results, fields] = await connection.query(sql, params);
-
-        console.log('Executed');
         console.log(results);
         return results;
     } catch (err) {
