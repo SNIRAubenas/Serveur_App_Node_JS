@@ -1,11 +1,7 @@
 const db = require("./db");
-const {query} = require("express");
 const mysql = require("mysql2");
 const config = require("./config");
-
-
-const connection = mysql.createConnection(config.db);
-
+mysql.createConnection(config.db);
 async function lancer(request, response){
     try {
         const sql = 'SELECT SUM(emballage) AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet';

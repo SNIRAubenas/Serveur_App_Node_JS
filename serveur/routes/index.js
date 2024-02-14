@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');  // Correctif : changer 'parser' en 'bodyParser'
 //const db_requette = require('./db_requette');
-const mysql = require("mysql2");
-const config = require("../Bdd/config");
+require("mysql2");
+require("../Bdd/config");
 const auth = require("./authentification");
-const db = require("../Bdd/db");
+require("../Bdd/db");
 const jwt = require("jsonwebtoken");
 const db_requete = require("../Bdd/db_requette")
 
@@ -17,12 +17,12 @@ router.get('/', function(request, res, next) {
   console.log(req.session);
 });
 
-// route pour avoir les données et les envoyer a nathan pour les diagramme sans connexion
+// route pour avoir les données et les envoyer en json pour les diagrammes sans connexion
 router.get('/api', async function(request, response, next) {
   const reponse = db_requete.lancer(request, response);
 });
 
-//route pour ce connecter
+//route pour que l'utilisateur ce connecte en appelant la methode authentification
 router.post('/login', function(request, response, next){
 
   const user_login = request.body.login;

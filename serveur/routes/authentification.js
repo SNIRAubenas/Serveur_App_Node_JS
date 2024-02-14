@@ -1,6 +1,5 @@
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
-const {query} = require("express");
 const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
 
@@ -12,7 +11,7 @@ const connection = mysql.createConnection(config.db);
 async function lireLesLogin(request, response, user) {
     try {
         const login = await lelogin(user);
-        var success = false;
+        let success = false;
         if (login) {
             const token = jwt.sign({ user }, 'votre_clé_secrète', { expiresIn: '1h' });
             success= true;
