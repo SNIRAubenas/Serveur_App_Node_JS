@@ -13,6 +13,8 @@ const db_requete = require("../Bdd/db_requette")
 router.use(bodyParser.json());
 
 router.get('/', function(request, res, next) {
+  //const jwt_token = request.body.token;
+  console.log(request.body.token)
   res.send("connected");
   console.log(req.session);
 });

@@ -1,9 +1,9 @@
 const config = {
     //configuration de notre base de donnée
     db: {
-        host: "10.0.0.164",
+        host: "localhost",
         user: "root",
-        password: "",
+        password: "root",
         database: "table_de_tri",
         connectTimeout: 60000
     }
