@@ -10,10 +10,12 @@ async function query(sql, params) {
         const [results, fields] = await connection.query(sql, params);
         console.log(results);
         return results;
+        await connection.end();
     } catch (err) {
         console.error(err);
         throw err; // Ne pas oublier de propager l'erreur
     }
+    //connection.end();
 }
 
 

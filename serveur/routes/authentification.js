@@ -2,6 +2,7 @@ const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
+const {response} = require("express");
 
 
 
@@ -50,7 +51,15 @@ function lelogin(user){
     });
 }
 
+async function veryfyeUsers(token, response) {
+    const user_token = token;
+    const decode = jwt.verify(user_token, 'votre_clé_secrète')
+    console.log(decode.user.login)
+    response.json({"user": decode.user.login})
+}
+
 module.exports = {
     lireLesLogin,
-    lelogin
+    lelogin,
+    veryfyeUsers
 }

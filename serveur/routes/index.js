@@ -12,11 +12,12 @@ const db_requete = require("../Bdd/db_requette")
 
 router.use(bodyParser.json());
 
-router.get('/', function(request, res, next) {
+router.post('/', function(request, res, next) {
   //const jwt_token = request.body.token;
-  console.log(request.body.token)
-  res.send("connected");
-  console.log(req.session);
+  const user_token = request.body.token;
+  const repnse = auth.veryfyeUsers(user_token);
+  console.log(request.body.token);
+  //res.json(auth.veryfyeUsers(user_token))
 });
 
 // route pour avoir les données et les envoyer en json pour les diagrammes sans connexion
