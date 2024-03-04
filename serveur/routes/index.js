@@ -15,7 +15,7 @@ router.use(bodyParser.json());
 router.post('/', function(request, res, next) {
   //const jwt_token = request.body.token;
   const user_token = request.body.token;
-  const repnse = auth.veryfyeUsers(user_token);
+  const repnse = auth.veryfyeUsers(user_token,res);
   console.log(request.body.token);
   //res.json(auth.veryfyeUsers(user_token))
 });
