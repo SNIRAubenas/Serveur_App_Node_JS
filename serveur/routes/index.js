@@ -12,13 +12,30 @@ const db_requete = require("../Bdd/db_requette")
 
 router.use(bodyParser.json());
 
-router.post('/', function(request, res, next) {
-  //const jwt_token = request.body.token;
-  const user_token = request.body.token;
-  const repnse = auth.veryfyeUsers(user_token,res);
-  console.log(request.body.token);
-  //res.json(auth.veryfyeUsers(user_token))
+router.post('/', async function(request, res, next) {
+  try {
+    const user_token = request.body.token;
+    const authResponse = await auth.veryfyeUsers(user_token, res);
+
+    // Check if authResponse has been sent
+    if (!res.headersSent) {
+      const dbResponse = await db_requete.utilisateur(request, res);
+
+      // Do something with the responses if needed
+      console.log(authResponse, dbResponse);
+
+      // You can send a final response here if necessary
+      res.status(200).send("Success");
+    }
+  } catch (error) {
+    console.error(error);
+    // Send an error response if necessary
+    if (!res.headersSent) {
+      res.status(500).send('Internal Server Error');
+    }
+  }
 });
+
 
 // route pour avoir les données et les envoyer en json pour les diagrammes sans connexion
 router.get('/api', async function(request, response, next) {
@@ -38,9 +55,6 @@ router.post('/login', function(request, response, next){
 
   const reponse = auth.lireLesLogin(request, response, user);
 });
-
-
-
 
 
 module.exports = router;
