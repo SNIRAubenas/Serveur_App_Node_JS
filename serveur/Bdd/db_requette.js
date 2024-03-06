@@ -39,11 +39,11 @@ async function utilisateur(request, response, userLogin) {
         let responseSent = false;
         const sql = 'SELECT SUM(emballage) AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet;';
         const totalgeneral = "SELECT FORMAT(SUM(pain + alimentaire + emballage), 3)  AS total_jour FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE DATE(horodatage) = CURDATE() AND user.id_user = (SELECT id_user FROM user WHERE login = ?);";
-        const sql3 = "SELECT DAYNAME(horodatage) AS jour, FORMAT(SUM(pain + alimentaire + emballage),3) AS total_journalier FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE YEARWEEK(horodatage)=YEARWEEK(NOW()) GROUP BY jour AND user.id_user = (SELECT id_user FROM user WHERE login = '?');";
-        const mois = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3)  AS total_mois FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE MONTH(horodatage) = MONTH(CURRENT_DATE()) AND user.id_user = (SELECT id_user FROM user WHERE login = '"+ user +"');"
-        const annee = "SELECT DAY(horodatage) AS jour_du_mois, FORMAT(SUM(pain + alimentaire + emballage),3) AS total_annee FROM dechet JOIN user ON dechet.id_user = user.id_user  WHERE MONTH(horodatage) = MONTH(CURRENT_DATE()) GROUP BY jour_du_mois ORDER BY jour_du_mois AND user.id_user = (SELECT id_user FROM user WHERE login = '?');"
-        const jourdumois = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3) AS total_dujour_dumois FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE YEAR(horodatage) = YEAR(CURRENT_DATE()) AND user.id_user = (SELECT id_user FROM user WHERE login = '?');"
-        const depuiscreation = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3) AS total_creation FROM dechet JOIN user ON dechet.id_user = user.id_user AND user.id_user = (SELECT id_user FROM user WHERE login = '?');"
+        const sql3 = "SELECT DAYNAME(horodatage) AS jour, FORMAT(SUM(pain + alimentaire + emballage),3) AS total_journalier FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE YEARWEEK(horodatage)=YEARWEEK(NOW()) GROUP BY jour AND user.id_user = (SELECT id_user FROM user WHERE login = ?);";
+        const mois = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3)  AS total_mois FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE MONTH(horodatage) = MONTH(CURRENT_DATE()) AND user.id_user = (SELECT id_user FROM user WHERE login = ?);"
+        const annee = "SELECT DAY(horodatage) AS jour_du_mois, FORMAT(SUM(pain + alimentaire + emballage),3) AS total_annee FROM dechet JOIN user ON dechet.id_user = user.id_user  WHERE MONTH(horodatage) = MONTH(CURRENT_DATE()) GROUP BY jour_du_mois ORDER BY jour_du_mois AND user.id_user = (SELECT id_user FROM user WHERE login = ?);"
+        const jourdumois = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3) AS total_dujour_dumois FROM dechet JOIN user ON dechet.id_user = user.id_user WHERE YEAR(horodatage) = YEAR(CURRENT_DATE()) AND user.id_user = (SELECT id_user FROM user WHERE login = ?);"
+        const depuiscreation = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3) AS total_creation FROM dechet JOIN user ON dechet.id_user = user.id_user AND user.id_user = (SELECT id_user FROM user WHERE login = ?);"
         const result = await db.query(sql,[userLogin]);
         const resultatgeneral = await db.query(totalgeneral, [userLogin]);
         const resultat_mois = await db.query(mois, [userLogin]);
@@ -55,6 +55,7 @@ async function utilisateur(request, response, userLogin) {
         // Combine the results into a single response
         if (!responseSent) {
             response.json({
+                user : userLogin,
                 resultat: result,
                 general: resultatgeneral,
                 mois: resultat_mois,

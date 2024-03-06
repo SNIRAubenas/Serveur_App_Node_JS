@@ -20,8 +20,8 @@ router.post('/', async function(request, res, next) {
     // Check if authResponse has been sent
 
       const user = request.body.login
-      console.log(user)
-      const dbResponse =  db_requete.utilisateur(request, res, user_token);
+      console.log(authResponse)
+      const dbResponse =  db_requete.utilisateur(request, res, authResponse);
 
   } catch (error) {
     console.error(error);

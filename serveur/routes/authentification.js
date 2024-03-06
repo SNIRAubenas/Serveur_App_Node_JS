@@ -56,7 +56,7 @@ async function veryfyeUsers(token, response) {
         const user_token = token;
         const decode = jwt.verify(user_token, 'votre_clé_secrète')
         //return({"user" : decode.user.login})
-        console.log(decode)
+        return(decode.user.login)
         response.json({"user": decode.user.login})
     }catch (err){
         console.error(err);
