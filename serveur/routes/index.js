@@ -18,15 +18,11 @@ router.post('/', async function(request, res, next) {
     const authResponse = await auth.veryfyeUsers(user_token, res);
 
     // Check if authResponse has been sent
-    if (!res.headersSent) {
-      const dbResponse = await db_requete.utilisateur(request, res);
 
-      // Do something with the responses if needed
-      console.log(authResponse, dbResponse);
+      const user = request.body.login
+      console.log(user)
+      const dbResponse =  db_requete.utilisateur(request, res, user_token);
 
-      // You can send a final response here if necessary
-      res.status(200).send("Success");
-    }
   } catch (error) {
     console.error(error);
     // Send an error response if necessary
