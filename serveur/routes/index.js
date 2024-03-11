@@ -23,7 +23,7 @@ router.post('/', async function(request, res, next) {
 
       console.log(authResponse)
       const dbResponse =  db_requete.utilisateur(request, res, authResponse);
-    res.redirect('/refresh?token=' + encodeURIComponent(user_token));
+
 
   } catch (error) {
     console.error(error);
@@ -33,28 +33,6 @@ router.post('/', async function(request, res, next) {
     }
   }
 });
-
-router.get('/refresh', async function(request, res, next) {
-  try {
-    const user_token = request.query.token;
-    //const authResponse = await auth.veryfyeUsers(user_token, res);
-    console.log(user_token);
-
-    // Check if authResponse has been sent
-
-
-    //console.log(authResponse)
-    //const dbResponse =  db_requete.utilisateur(request, res, authResponse);
-
-  } catch (error) {
-    console.error(error);
-    // Send an error response if necessary
-    if (!res.headersSent) {
-      res.status(500).send('Internal Server Error');
-    }
-  }
-});
-
 
 
 // route pour avoir les données et les envoyer en json pour les diagrammes sans connexion
