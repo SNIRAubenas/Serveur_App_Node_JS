@@ -1,11 +1,7 @@
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const jwt = require("jsonwebtoken");
-const cookieParser = require('cookie-parser');
-const {response} = require("express");
-
-
-
+require('cookie-parser');
 const connection = mysql.createConnection(config.db);
 
 //methode pour gerer la connexion des utilisateur utilisation de jwt
@@ -67,6 +63,5 @@ async function veryfyeUsers(token, response) {
 
 module.exports = {
     lireLesLogin,
-    lelogin,
     veryfyeUsers
 }
