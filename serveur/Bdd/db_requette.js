@@ -2,7 +2,7 @@ const db = require("./db");
 const mysql = require("mysql2");
 const config = require("./config");
 mysql.createConnection(config.db);
-async function lancer(request, response){
+async function lancer(response){
     try {
         const sql = 'SELECT SUM(emballage) AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet;';
         const totalgeneral = "SELECT FORMAT(SUM(pain + alimentaire + emballage),3) AS total_jour FROM dechet WHERE DATE(horodatage) = CURDATE();";
@@ -34,7 +34,7 @@ async function lancer(request, response){
     }
     }
 }
-async function utilisateur(request, response, userLogin) {
+async function utilisateur(response, userLogin) {
     try {
         let responseSent = false;
         const sql = 'SELECT SUM(emballage) AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet;';

@@ -11,7 +11,7 @@ const db_requete = require("../Bdd/db_requette")
 
 
 router.use(bodyParser.json());
-
+// recevoir les informations après la connexion
 router.post('/', async function(request, res, next) {
   try {
     const user_token = request.body.token;
@@ -22,7 +22,7 @@ router.post('/', async function(request, res, next) {
 
 
       console.log(authResponse)
-      const dbResponse =  db_requete.utilisateur(request, res, authResponse);
+      const dbResponse =  db_requete.utilisateur(res, authResponse);
 
 
   } catch (error) {
@@ -37,7 +37,7 @@ router.post('/', async function(request, res, next) {
 
 // route pour avoir les données et les envoyer en json pour les diagrammes sans connexion
 router.get('/api', async function(request, response, next) {
-  const reponse = db_requete.lancer(request, response);
+  const reponse = db_requete.lancer(response);
 });
 
 //route pour que l'utilisateur ce connecte en appelant la methode authentification
