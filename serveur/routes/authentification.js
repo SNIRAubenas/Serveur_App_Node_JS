@@ -1,7 +1,8 @@
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const jwt = require("jsonwebtoken");
-require('cookie-parser');
+//const Crypto = require('subtle-crypto')
+
 const connection = mysql.createConnection(config.db);
 
 //methode pour gerer la connexion des utilisateur utilisation de jwt
@@ -12,7 +13,7 @@ async function lireLesLogin(request, response, user) {
         if (login) {
             const token = jwt.sign({ user }, 'votre_clé_secrète', { expiresIn: '1h' });
             success= true;
-            response.cookie('token', token, { httpOnly: true, secure: true, SameSite: 'strict' , expires: new Date(Number(new Date()) + 30*60*1000) }); //we add secure: true, when using https.
+            //response.cookie('token', token, { httpOnly: true, secure: true, SameSite: 'strict' , expires: new Date(Number(new Date()) + 30*60*1000) }); //we add secure: true, when using https.
 
             response.json({ success : success , message: 'Authentification réussie.', token });
 
@@ -27,9 +28,9 @@ async function lireLesLogin(request, response, user) {
 
 function lelogin(user){
     return new Promise(function (resolve, reject){
-        // const connection =  mysql.createConnection(config.db);
+        //const hashBuffer =  Crypto.subtle.digest('SHA-256', user.password);
+        //console.log(hashBuffer);
         const sql = 'SELECT * FROM user WHERE login = "'+user.login+'" AND PASSWORD = "'+user.password+'"';
-        console.log("sql = " + sql);
         connection.query(sql, function (err, result) {
             if (err) {
                 reject(false);
