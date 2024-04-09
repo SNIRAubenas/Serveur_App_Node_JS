@@ -4,7 +4,7 @@ const config = require("./config");
 mysql.createConnection(config.db);
 async function lancer(response){
     try {
-        const sql = "SELECT REPLACE(FORMAT(SUM(emballage),3,'fr_FR'), ',', '.') AS emballage , SUM(pain) AS pain, SUM(alimentaire) AS alimentaire FROM dechet;";
+        const sql = "SELECT REPLACE(FORMAT(SUM(emballage),3,'fr_FR'), ',', '.') AS emballage , REPLACE(FORMAT(SUM(pain), 3, 'fr_FR'), ',', '.') AS pain, REPLACE(FORMAT(SUM(alimentaire), 3, 'fr_FR'), ',', '.') AS alimentaire FROM dechet;";
         const totalgeneral = "SELECT REPLACE(FORMAT(SUM(pain + alimentaire + emballage),3,'fr_FR'), ',', '.') AS total_jour FROM dechet WHERE DATE(horodatage) = CURDATE();";
         const sql3 = "SELECT DAYNAME(horodatage) AS jour, REPLACE(FORMAT(SUM(pain + alimentaire + emballage),3,'fr_FR'), ',', '.') AS total_journalier FROM dechet WHERE YEARWEEK(horodatage)=YEARWEEK(NOW()) GROUP BY jour;"
         const mois = "SELECT REPLACE(FORMAT(SUM(pain + alimentaire + emballage),3,'fr_FR'), ',', '.') AS total_mois FROM dechet WHERE MONTH(horodatage) = MONTH(CURRENT_DATE());"
