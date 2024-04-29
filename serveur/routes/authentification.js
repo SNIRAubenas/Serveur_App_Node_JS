@@ -1,6 +1,7 @@
 const mysql = require("mysql2");
 const config = require("../Bdd/config");
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
 //const Crypto = require('subtle-crypto')
 
 const connection = mysql.createConnection(config.db);
@@ -30,7 +31,8 @@ function lelogin(user){
     return new Promise(function (resolve, reject){
         //const hashBuffer =  Crypto.subtle.digest('SHA-256', user.password);
         //console.log(hashBuffer);
-        const sql = 'SELECT * FROM user WHERE login = "'+user.login+'" AND PASSWORD = "'+user.password+'"';
+        console.log(hashPassword(user.password))
+        const sql = 'SELECT * FROM user WHERE login = "'+user.login+'" AND PASSWORD = "'+hashPassword(user.password)+'"';
         connection.query(sql, function (err, result) {
             if (err) {
                 reject(false);
@@ -47,7 +49,11 @@ function lelogin(user){
         });
     });
 }
-
+function hashPassword(password) {
+    const salt = 'JeSuisUneBestioleQuiAimeLeMaroille'
+    const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512');
+    return hash.toString('hex');
+}
 async function veryfyeUsers(token, response) {
     try{
         const user_token = token;
