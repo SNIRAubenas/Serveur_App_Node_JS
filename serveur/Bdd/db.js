@@ -1,24 +1,24 @@
 const mysql = require('mysql2/promise');
 const config = require('./config');
 
-// methode pour nous connecter a la base de données
+// Méthode pour nous connecter à la base de données et exécuter une requête
 async function query(sql, params) {
+    let connection;
     try {
-        const connection = await mysql.createConnection(config.db);
-
-        // Utiliser await directement pour la requête
+        connection = await mysql.createConnection(config.db);
         const [results, fields] = await connection.query(sql, params);
         console.log(results);
         return results;
-        await connection.end();
     } catch (err) {
         console.error(err);
         throw err; // Ne pas oublier de propager l'erreur
+    } finally {
+        if (connection) {
+            await connection.end();
+        }
     }
-    //connection.end();
 }
-
 
 module.exports = {
     query
-}
+};
